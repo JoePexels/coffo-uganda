@@ -1,168 +1,1391 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us - Coffo</title>
-  <link rel="stylesheet" href="assets/css/contact.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us – Coffo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #ff8b00;
+            --primary-hover: #ff9f2a;
+            --text-color: #ffffff;
+            --bg-color: #1a1a1a;
+            --card-bg: #252525;
+            --glass-bg: rgba(37, 37, 37, 0.8);
+            --transition: all 0.3s ease;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        span {
+            color: var(--primary-color);
+            font-family: var(--heading-font);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ========== NAVBAR (intact) ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+        .navbar.scrolled {
+            background-color: rgba(26, 26, 26, 0.98);
+            padding: 10px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo a {
+            font-family: var(--heading-font);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            position: relative;
+            padding: 5px 0;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .cart-icon {
+            position: relative;
+            display: inline-block;
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+        #cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary-color);
+            color: #000;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            border: 2px solid var(--bg-color);
+        }
+        .nav-order-btn {
+            padding: 10px 24px;
+            font-size: 0.9rem;
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .nav-order-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 139, 0, 0.4);
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .search-input {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            font-size: 0.9rem;
+            width: 0;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+        .search-input.active {
+            width: 200px;
+            opacity: 1;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        #search-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        .mobile-menu-btn {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            color: var(--text-color);
+            border: none;
+        }
+
+        /* ========== MOBILE SIDEBAR (intact) ========== */
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: #111;
+            z-index: 9999;
+            transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .mobile-sidebar.active {
+            right: 0;
+        }
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .sidebar-close {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .sidebar-close:hover {
+            color: var(--primary-color);
+        }
+        .sidebar-nav {
+            flex: 1;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .sidebar-link {
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: color 0.3s, padding-left 0.3s;
+        }
+        .sidebar-link:hover {
+            color: var(--primary-color);
+            padding-left: 10px;
+        }
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        .sidebar-order-btn {
+            width: 100%;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 32px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .sidebar-order-btn:hover {
+            background-color: var(--primary-hover);
+        }
+        .sidebar-socials {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .sidebar-socials a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .sidebar-socials a:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #000;
+        }
+        .sidebar-footer p {
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        /* ========== MODERN HERO ========== */
+        .hero {
+            position: relative;
+            height: 70vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 750px;
+            padding: 0 20px;
+            animation: fadeInUp 1s ease;
+        }
+        .hero-content h1 {
+            font-family: var(--heading-font);
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            animation: bounce 2s infinite;
+        }
+        .hero-scroll-indicator a {
+            color: #fff;
+            font-size: 2rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .hero-scroll-indicator a:hover {
+            opacity: 1;
+        }
+
+        /* ========== GLOBAL CONTACT ========== */
+        .global-contact {
+            padding: 100px 0 60px;
+            background: #0f0f0f;
+        }
+        .global-contact h2 {
+            font-family: var(--heading-font);
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        .contact-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s;
+        }
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(255, 139, 0, 0.12);
+            border-color: var(--primary-color);
+        }
+        .contact-card .card-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 139, 0, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+        .contact-card:hover .card-icon {
+            background: var(--primary-color);
+            color: #000;
+            box-shadow: 0 10px 30px rgba(255, 139, 0, 0.4);
+        }
+        .contact-card h3 {
+            font-family: var(--heading-font);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+        .contact-card p {
+            margin: 8px 0;
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+        .contact-card p i {
+            color: var(--primary-color);
+            margin-right: 8px;
+            width: 18px;
+            text-align: center;
+        }
+
+        /* ========== CONTACT FORM SECTION ========== */
+        .contact-form-section {
+            padding: 80px 0;
+            background: #151515;
+        }
+        .form-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .form-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px 40px;
+        }
+        .form-glass h2 {
+            font-family: var(--heading-font);
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+        }
+        .form-glass .subtitle {
+            opacity: 0.7;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #fff;
+            font-size: 1rem;
+            font-family: var(--body-font);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            background: rgba(255, 139, 0, 0.05);
+            box-shadow: 0 0 20px rgba(255, 139, 0, 0.1);
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+        .checkbox-group {
+            margin-bottom: 25px;
+        }
+        .checkbox-group h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+        .checkbox-group label {
+            display: inline-block;
+            margin: 6px 16px 6px 0;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 10px 18px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .checkbox-group label:hover {
+            border-color: var(--primary-color);
+            background: rgba(255, 139, 0, 0.1);
+        }
+        .checkbox-group input[type="checkbox"] {
+            display: none;
+        }
+        .checkbox-group input[type="checkbox"]:checked+span {
+            color: var(--primary-color);
+        }
+        .checkbox-group label:has(input:checked) {
+            background: rgba(255, 139, 0, 0.2);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary-color);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--body-font);
+            letter-spacing: 0.5px;
+        }
+        .submit-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 139, 0, 0.35);
+        }
+        .submit-btn:active {
+            transform: scale(0.97);
+        }
+        .form-image-side {
+            border-radius: 24px;
+            overflow: hidden;
+            height: 100%;
+            min-height: 500px;
+        }
+        .form-image-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 24px;
+            transition: transform 0.6s ease;
+        }
+        .form-image-side:hover img {
+            transform: scale(1.04);
+        }
+
+        /* ========== MAP SECTION ========== */
+        .map-section {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+        }
+        .map-section iframe {
+            width: 100%;
+            height: 100%;
+            filter: grayscale(40%) brightness(0.7);
+            transition: filter 0.5s ease;
+        }
+        .map-section:hover iframe {
+            filter: grayscale(0%) brightness(1);
+        }
+        .map-overlay-card {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            background: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 25px 30px;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 300px;
+        }
+        .map-overlay-card h4 {
+            font-family: var(--heading-font);
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+        .map-overlay-card p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin: 4px 0;
+        }
+
+        /* ========== SOCIAL MEDIA ========== */
+        .social-media-section {
+            padding: 70px 0;
+            text-align: center;
+            background: #0f0f0f;
+        }
+        .social-media-section h2 {
+            font-family: var(--heading-font);
+            font-size: 2.5rem;
+            margin-bottom: 35px;
+        }
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .social-btn {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--primary-color);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.4s ease;
+            z-index: 0;
+        }
+        .social-btn:hover::before {
+            transform: scale(1);
+        }
+        .social-btn i {
+            position: relative;
+            z-index: 1;
+            transition: color 0.4s ease;
+        }
+        .social-btn:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(255, 139, 0, 0.3);
+            color: #000;
+        }
+
+        /* ========== NEWSLETTER ========== */
+        .newsletter {
+            position: relative;
+            background: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+            padding: 100px 20px;
+            text-align: center;
+        }
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+        .newsletter-container {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 50px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .newsletter-container h2 {
+            font-family: var(--heading-font);
+            font-size: 2.4rem;
+            margin-bottom: 12px;
+        }
+        .newsletter-container p {
+            opacity: 0.8;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+        .newsletter .input-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .newsletter .input-group input {
+            flex: 1;
+            min-width: 250px;
+            padding: 16px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .newsletter .input-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(255, 139, 0, 0.2);
+        }
+        .newsletter .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .newsletter .input-group .submit {
+            padding: 16px 35px;
+            background: var(--primary-color);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .newsletter .input-group .submit:hover {
+            background: var(--primary-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 139, 0, 0.4);
+        }
+
+        /* ========== MODAL ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-box {
+            background: #1e1e1e;
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-overlay.active .modal-box {
+            transform: translateY(0) scale(1);
+        }
+        .modal-icon {
+            font-size: 4rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            animation: popIn 0.6s ease;
+        }
+        .modal-box h3 {
+            font-family: var(--heading-font);
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+        .modal-box p {
+            opacity: 0.8;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        .modal-close-btn {
+            padding: 14px 40px;
+            background: var(--primary-color);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .modal-close-btn:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 10px 25px rgba(255, 139, 0, 0.4);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: #0a0a0a;
+            padding: 80px 0 20px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        .footer-logo .f-brand {
+            font-family: var(--heading-font);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .footer-logo p {
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .footer-links h3,
+        .footer-social h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .footer-links a:hover {
+            padding-left: 0.5rem;
+            color: var(--primary-color);
+        }
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .social-icons a {
+            width: 42px;
+            height: 42px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+            color: #000;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes bounce {
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(15px);
+            }
+        }
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            70% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .nav-links,
+            .nav-icons {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: block !important;
+            }
+            .hero {
+                height: 60vh;
+                background-attachment: scroll;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .form-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .form-image-side {
+                min-height: 300px;
+                order: -1;
+            }
+            .form-glass {
+                padding: 30px 20px;
+            }
+            .global-contact h2,
+            .social-media-section h2 {
+                font-size: 2rem;
+            }
+            .map-overlay-card {
+                position: static;
+                margin: 20px;
+                max-width: none;
+                border-radius: 16px;
+            }
+            .map-section {
+                height: auto;
+            }
+            .map-section iframe {
+                height: 300px;
+            }
+            .newsletter-container {
+                padding: 30px 20px;
+            }
+            .newsletter .input-group input {
+                min-width: 100%;
+            }
+            .checkbox-group label {
+                display: block;
+                margin: 8px 0;
+                text-align: center;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .social-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="container">
-      <div class="logo" style="color: var(--primary-color);">
-        <a href="coffee.html" style="text-decoration: none;"><span style="font-size: 25px; font-weight: bolder;">Coffo</span></a>
-      </div>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="index.html#menu">Menu</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="contact.html" class="active">Contact</a>
-      </div>
-      <div class="nav-icons">
-        <div class="search-container">
-          <input type="text" id="search-input" placeholder="Search..." class="search-input" style="display: none;">
-          <a href="coffee.html#search" id="search-toggle"><i class="fas fa-search"></i></a>
+
+    <!-- ========== NAVIGATION (intact) ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">Coffo</a>
+            </div>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="index.html#menu">Menu</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="contact.html" class="active">Contact</a>
+            </div>
+            <div class="nav-icons" id="nav-icons">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search coffee..." class="search-input">
+                    <button id="search-toggle"><i class="fas fa-search"></i></button>
+                </div>
+                <a href="carts.html" class="cart-icon" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
+                <a href="index.html#menu" class="nav-order-btn">Order Now</a>
+            </div>
+            <div class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
-        <a href="carts.html" class="cart-icon">
-          <i class="fas fa-shopping-cart"></i>
-          <span id="cart-count">0</span>
-        </a>
-        <button><a href="index.html#menu" style="text-decoration: none;">Order Now</a></button>
-      </div>
-      <div class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-      </div>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>Let’s Brew a <span> Conversation!</span></h1>
-      <p>We believe coffee <span> connects</span> people worldwide. Whether you have inquiries about our <span> coffee</span> experiences, want to collaborate, or just want to share your coffee story, we’d love to hear from you!</p>
-    </div>
-  </section>
-
-  <!-- Global Contact Information -->
-  <section class="global-contact">
-    <h2>Global <span>Contact</span> Information</h2>
-    <div class="contact-grid">
-      <div class="contact-card">
-        <h3><span>Headquarters</span></h3>
-        <p><i class="fas fa-map-marker-alt"></i> 123 Coffee Lane, Brew City, BC 12345</p>
-        <p><i class="fas fa-phone"></i> +1 (123) 456-7890</p>
-        <p><i class="fas fa-envelope"></i> info@coffeebrand.com</p>
-      </div>
-      <div class="contact-card">
-        <h3><span>Europe Office</span></h3>
-        <p><i class="fas fa-map-marker-alt"></i> 456 Espresso Street, Paris, France</p>
-        <p><i class="fas fa-phone"></i> +33 123 456 789</p>
-        <p><i class="fas fa-envelope"></i> europe@coffeebrand.com</p>
-      </div>
-      <div class="contact-card">
-        <h3><span>Asia Office</span></h3>
-        <p><i class="fas fa-map-marker-alt"></i> 789 Latte Road, Tokyo, Japan</p>
-        <p><i class="fas fa-phone"></i> +81 123 456 789</p>
-        <p><i class="fas fa-envelope"></i> asia@coffeebrand.com</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Form -->
-  <section class="contact-form">
-    <div class="glass-container">
-      <h2>Join Our <span>Coffee </span> Community</h2>
-      <form id="communityForm">
-        <div class="form-group">
-          <input type="text" id="name" placeholder="Full Name" required>
+    <!-- ========== MOBILE SIDEBAR (intact) ========== -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="mobile-sidebar" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><a href="index.html">Coffo</a></div>
+            <button class="sidebar-close" id="sidebar-close"><i class="fas fa-times"></i></button>
         </div>
-        <div class="form-group">
-          <input type="email" id="email" placeholder="Email Address" required>
+        <div class="sidebar-nav">
+            <a href="index.html" class="sidebar-link">Home</a>
+            <a href="about.html" class="sidebar-link">About Us</a>
+            <a href="index.html#menu" class="sidebar-link">Our Menu</a>
+            <a href="gallery.html" class="sidebar-link">Gallery</a>
+            <a href="contact.html" class="sidebar-link">Contact</a>
         </div>
-       
-        <div class="checkbox-group">
-          <h3>Preferred <span>Coffee</span> Experience</h3>
-          <label><input type="checkbox" name="experience" value="tasting"> Tasting Events</label>
-          <label><input type="checkbox" name="experience" value="workshops"> Virtual Coffee Workshops</label>
-          <label><input type="checkbox" name="experience" value="barista"> Barista Training</label>
-        </div>
-        <div class="form-group">
-          <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
-        </div>
-        <button type="submit">Send Message</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- Google Maps -->
-  <section class="map-section">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.8354345093747!2d144.9537353153166!3d-37.816279742021665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d2fed4f5b6e1!2sCoffee%20Shop!5e0!3m2!1sen!2sus!4v1633039290000!5m2!1sen!2sus" 
-            width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-  </section>
-
-  <!-- Social Media Links -->
-  <section class="social-media">
-    <h2>Join Our <span>Global Coffee</span> Community</h2>
-    <div class="social-buttons">
-      <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
-      <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
-      <a href="#" class="social-btn"><i class="fab fa-tiktok"></i></a>
-      <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
-      <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
-    </div>
-  </section>
-
-<!-- Newsletter Section -->
-<section class="newsletter">
-    <div class="newsletter-container">
-      <h2>Subscribe to Our <span>Newsletter</span></h2>
-      <p>Get the latest coffee trends, exclusive offers, and updates delivered straight to your inbox.</p>
-      <form id="newsletterForm">
-        <div class="input-group">
-          <input type="email" placeholder="Your Email" required>
-          <button type="submit" class="submit" style="background-color: var(--primary-color); color: var(--text-color);">Subscribe</button>
-        </div>
-      </form>
-    </div>
-  </section>
-
-    <!-- Footer -->
-  <footer class="footer">
-   <div class="container">
-       <div class="footer-content">
-           <div class="footer-logo">
-               <p style="font-size: 25px; font-weight: 700;"><span>Coffo</span></p>
-               <p>The best coffee shop in town</p>
-           </div>
-           <div class="footer-links">
-               <h3>Quick Links</h3>
-               <a href="index.html">Home</a>
-               <a href="about.html">About</a>
-               <a href="index.html#menu">Menu</a>
-               <a href="contact.html">Contact</a>
-               <a href="gallery.html">Gallery</a>
-           </div>
-           <div class="footer-social">
-               <h3>Follow Us</h3>
-               <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook"></i></a>
+        <div class="sidebar-footer">
+            <a href="index.html#menu" class="sidebar-order-btn">Order Now</a>
+            <div class="sidebar-socials">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
                 <a href="#"><i class="fab fa-instagram"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-               </div>
-           </div>
-       </div>
-       <div class="footer-bottom">
-           <p>&copy; 2025 Coffo. All rights reserved.</p>
-       </div>
-   </div>
-</footer>
+            </div>
+            <p>© 2025 Coffo. All rights reserved.</p>
+        </div>
+    </div>
 
-<script src="assets/js/contact.js"></script>
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1>Let's Brew a <span>Conversation!</span></h1>
+            <p>We believe coffee <span>connects</span> people worldwide. Whether you have inquiries about our <span>coffee</span> experiences, want to collaborate, or just want to share your coffee story, we'd love to hear from you!</p>
+        </div>
+        <div class="hero-scroll-indicator">
+            <a href="#global-contact"><i class="fas fa-chevron-down"></i></a>
+        </div>
+    </section>
+
+    <!-- ========== GLOBAL CONTACT ========== -->
+    <section class="global-contact" id="global-contact">
+        <div class="container">
+            <h2>Global <span>Contact</span> Information</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="card-icon"><i class="fas fa-building"></i></div>
+                    <h3><span>Headquarters</span></h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 143 Coffee Lane, Brew City, BC 1345</p>
+                    <p><i class="fas fa-phone"></i> +1 (123) 456-7890</p>
+                    <p><i class="fas fa-envelope"></i> brew@coffobrand.com</p>
+                </div>
+                <div class="contact-card">
+                    <div class="card-icon"><i class="fas fa-globe-africa"></i></div>
+                    <h3><span>Uganda Office</span></h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Kitooro Street, Entebbe, Uganda</p>
+                    <p><i class="fas fa-phone"></i> +256 762 017 465</p>
+                    <p><i class="fas fa-envelope"></i> info@coffo.com</p>
+                </div>
+                <div class="contact-card">
+                    <div class="card-icon"><i class="fas fa-globe-asia"></i></div>
+                    <h3><span>Asia Office</span></h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 789 Tsukumo Road, Tokyo, Japan</p>
+                    <p><i class="fas fa-phone"></i> +81 123 456 789</p>
+                    <p><i class="fas fa-envelope"></i> asia@coffeebrand.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CONTACT FORM ========== -->
+    <section class="contact-form-section" id="contact-form">
+        <div class="container">
+            <div class="form-wrapper">
+                <div class="form-glass">
+                    <h2>Join Our <span>Coffee</span> Community</h2>
+                    <p class="subtitle">Fill in the details below and we'll get back to you faster than you can brew a cup.</p>
+                    <form id="communityForm" novalidate>
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="checkbox-group">
+                            <h3>Preferred <span>Coffee</span> Experience</h3>
+                            <label><input type="checkbox" name="experience" value="tasting"><span> Tasting Events</span></label>
+                            <label><input type="checkbox" name="experience" value="workshops"><span> Virtual Coffee Workshops</span></label>
+                            <label><input type="checkbox" name="experience" value="barista"><span> Barista Training</span></label>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message <i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+                <div class="form-image-side">
+                    <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Coffee shop ambiance">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== MAP SECTION ========== -->
+    <section class="map-section">
+        <div class="map-overlay-card">
+            <h4><span>Visit Us</span></h4>
+            <p><i class="fas fa-map-pin"></i> 143 Coffee Lane, Brew City</p>
+            <p><i class="fas fa-clock"></i> Mon–Fri: 7am – 9pm</p>
+            <p><i class="fas fa-clock"></i> Sat–Sun: 8am – 10pm</p>
+        </div>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.8354345093747!2d144.9537353153166!3d-37.816279742021665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d2fed4f5b6e1!2sCoffee%20Shop!5e0!3m2!1sen!2sus!4v1633039290000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+    </section>
+
+    <!-- ========== SOCIAL MEDIA ========== -->
+    <section class="social-media-section">
+        <div class="container">
+            <h2>Join Our <span>Global Coffee</span> Community</h2>
+            <div class="social-buttons">
+                <a href="#" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-btn" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="#" class="social-btn" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== NEWSLETTER ========== -->
+    <section class="newsletter">
+        <div class="newsletter-container">
+            <h2>Subscribe to Our <span>Newsletter</span></h2>
+            <p>Get the latest coffee trends, exclusive offers, and updates delivered straight to your inbox.</p>
+            <form id="newsletterForm">
+                <div class="input-group">
+                    <input type="email" placeholder="Your Email" required>
+                    <button type="submit" class="submit">Subscribe</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="f-brand">Coffo</span>
+                    <p>The best coffee shop in town</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="index.html#menu">Menu</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="gallery.html">Gallery</a>
+                </div>
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Coffo. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== SUCCESS MODAL ========== -->
+    <div class="modal-overlay" id="confirmationModal">
+        <div class="modal-box">
+            <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
+            <h3>Message Sent Successfully!</h3>
+            <p>Thank you for joining our coffee community. We'll brew up a response and get back to you soon!</p>
+            <button class="modal-close-btn" id="modalCloseBtn">Close</button>
+        </div>
+    </div>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            // ========== FIXED MOBILE SIDEBAR TOGGLE ==========
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileSidebar = document.getElementById('mobile-sidebar');
+            const mobileOverlay = document.getElementById('mobile-overlay');
+            const sidebarClose = document.getElementById('sidebar-close');
+
+            function openSidebar() {
+                mobileSidebar.classList.add('active');
+                mobileOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSidebar() {
+                mobileSidebar.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            mobileMenuBtn.addEventListener('click', openSidebar);
+            sidebarClose.addEventListener('click', closeSidebar);
+            mobileOverlay.addEventListener('click', closeSidebar);
+
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.addEventListener('click', closeSidebar);
+            });
+
+            // ========== NAVBAR SCROLL ==========
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // ========== SEARCH TOGGLE ==========
+            const searchToggle = document.getElementById('search-toggle');
+            const searchInput = document.getElementById('search-input');
+            if (searchToggle && searchInput) {
+                searchToggle.addEventListener('click', () => {
+                    searchInput.classList.toggle('active');
+                    if (searchInput.classList.contains('active')) searchInput.focus();
+                });
+            }
+
+            // ========== CART COUNT ==========
+            function updateCartCount() {
+                const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                const totalQty = cartItems.reduce((t, i) => t + i.quantity, 0);
+                const cartCount = document.getElementById('cart-count');
+                if (cartCount) cartCount.textContent = totalQty;
+            }
+            updateCartCount();
+            window.addEventListener('storage', updateCartCount);
+
+            // ========== COMMUNITY FORM – MODAL TRIGGER ==========
+            const communityForm = document.getElementById('communityForm');
+            const modalOverlay = document.getElementById('confirmationModal');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+            function showModal() {
+                modalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function hideModal() {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            if (communityForm && modalOverlay) {
+                communityForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Basic validation
+                    const name = document.getElementById('name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const message = document.getElementById('message').value.trim();
+
+                    if (!name || !email || !message) {
+                        // Highlight empty fields
+                        [document.getElementById('name'), document.getElementById('email'), document
+                            .getElementById('message')
+                        ].forEach(field => {
+                            if (!field.value.trim()) {
+                                field.style.borderColor = '#ff4444';
+                                setTimeout(() => field.style.borderColor = '',
+                                    2000);
+                            }
+                        });
+                        return;
+                    }
+
+                    // Simple email regex
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email)) {
+                        document.getElementById('email').style.borderColor = '#ff4444';
+                        setTimeout(() => document.getElementById('email').style.borderColor = '',
+                            2000);
+                        return;
+                    }
+
+                    // Show success modal
+                    showModal();
+
+                    // Save to localStorage as a simple "submission log"
+                    const submissions = JSON.parse(localStorage.getItem('coffoSubmissions') || '[]');
+                    submissions.push({
+                        name,
+                        email,
+                        message,
+                        experiences: Array.from(document.querySelectorAll('input[name="experience"]:checked'))
+                            .map(cb => cb.value),
+                        timestamp: new Date().toISOString()
+                    });
+                    localStorage.setItem('coffoSubmissions', JSON.stringify(submissions));
+
+                    // Reset form
+                    communityForm.reset();
+                    // Reset checkbox label styles
+                    document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => cb
+                        .checked = false);
+                });
+            }
+
+            if (modalCloseBtn) {
+                modalCloseBtn.addEventListener('click', hideModal);
+            }
+            if (modalOverlay) {
+                modalOverlay.addEventListener('click', function(e) {
+                    if (e.target === modalOverlay) hideModal();
+                });
+            }
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modalOverlay && modalOverlay.classList.contains('active')) {
+                    hideModal();
+                }
+            });
+
+            // ========== NEWSLETTER FORM ==========
+            const newsletterForm = document.getElementById('newsletterForm');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const emailInput = this.querySelector('input[type="email"]');
+                    const email = emailInput.value.trim();
+                    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                        emailInput.style.borderColor = '#ff4444';
+                        setTimeout(() => emailInput.style.borderColor = '', 2000);
+                        return;
+                    }
+                    // Show success via modal as well
+                    const modalH3 = document.querySelector('.modal-box h3');
+                    const modalP = document.querySelector('.modal-box p');
+                    if (modalH3) modalH3.textContent = 'Subscribed Successfully!';
+                    if (modalP) modalP.textContent =
+                        'You\'re now part of the Brew Club. Exclusive offers and coffee trends are on their way!';
+                    showModal();
+                    // Reset back after modal closes
+                    setTimeout(() => {
+                        if (modalH3) modalH3.textContent = 'Message Sent Successfully!';
+                        if (modalP) modalP.textContent =
+                            'Thank you for joining our coffee community. We\'ll brew up a response and get back to you soon!';
+                    }, 5000);
+                    newsletterForm.reset();
+                });
+            }
+
+            // ========== SMOOTH SCROLLING ==========
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // ========== PARALLAX HERO SCROLL (desktop) ==========
+            window.addEventListener('scroll', () => {
+                const hero = document.querySelector('.hero');
+                if (hero && window.innerWidth > 768) {
+                    hero.style.backgroundPositionY = -(window.pageYOffset * 0.35) + 'px';
+                }
+            });
+
+        });
+    </script>
 </body>
 </html>
