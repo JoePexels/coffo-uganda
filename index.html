@@ -3,62 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffo</title>
-    
-    <!-- main styles -->
-    <link rel="stylesheet" href="assets/css/coffee.css">
-
+    <title>Coffo - Premium Artisan Coffee</title>
+    <link rel="shortcut icon" href="/assets/img/—Pngtree—spilled coffee_15461506 (1).webp" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/coffee.css">
 </head>
 <body>
-    <!-- Background Elements -->
-    <div class="bg-wrapper">
-        <div class="bg-overlay"></div>
-        <div class="bg-image"></div>
-    </div>
-
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="container">
-            <div class="logo" style="color: var(--primary-color);">
-                <a href="#home" style="text-decoration: none;"><span style="font-size: 25px; font-weight: bolder;">Coffo</span></a>
-              </div>
-          <div class="nav-links">
-            <a href="#home" class="active">Home</a>
-            <a href="about.html">About</a>
-            <a href="#menu">Menu</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="contact.html">Contact</a>
-          </div>
-          <div class="nav-icons">
-            <div class="search-container">
-              <input type="text" id="search-input" placeholder="Search coffee..." class="search-input" style="display: none;">
-              <a href="#search" id="search-toggle"><i class="fas fa-search"></i></a>
+            <div class="logo">
+                <a href="index.html">Coffo</a>
             </div>
-            <a href="carts.html" class="cart-icon">
-              <i class="fas fa-shopping-cart"></i>
-              <span id="cart-count">0</span>
-            </a>
-            <button><a href="#menu" style="text-decoration: none;">Order Now</a></button>
-          </div>
-          <div class="mobile-menu-btn">
-            <i class="fas fa-bars"></i>
-          </div>
+            <div class="nav-links" id="nav-links">
+                <a href="#home" class="active">Home</a>
+                <a href="about.html">About</a>
+                <a href="#menu">Menu</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-icons" id="nav-icons">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search coffee..." class="search-input">
+                    <button id="search-toggle"><i class="fas fa-search"></i></button>
+                </div>
+                <a href="carts.html" class="cart-icon" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
+                <a href="#menu" class="btn-primary nav-order-btn">Order Now</a>
+            </div>
+            <div class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
-      </nav>
+    </nav>
+
+    <!-- Mobile Sidebar Menu -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="mobile-sidebar" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><a href="index.html">Coffo</a></div>
+            <button class="sidebar-close" id="sidebar-close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sidebar-nav">
+            <a href="#home" class="sidebar-link">Home</a>
+            <a href="about.html" class="sidebar-link">About Us</a>
+            <a href="#menu" class="sidebar-link">Our Menu</a>
+            <a href="gallery.html" class="sidebar-link">Gallery</a>
+            <a href="contact.html" class="sidebar-link">Contact</a>
+        </div>
+        <div class="sidebar-footer">
+            <a href="#menu" class="btn-primary sidebar-order-btn">Order Now</a>
+            <div class="sidebar-socials">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p>© 2025 Coffo. All rights reserved.</p>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <div class="hero-glow"></div>
         <div class="container">
             <div class="hero-content">
-                <h1 style="font-size: 5rem;"><span>Heal</span> The World With <span>Coffee</span></h1>
-                <p>The coffee is brewed by first roasting the green coffee beans over hot coals in a brazier. <br> Given an <span>opportunity </span>to sample.</p>
-                <button class="btn-primary"><a href="#menu" style="text-decoration: none;">Order Now</a></button>
+                <div class="hero-badge animate-on-scroll">
+                    <i class="fas fa-award"></i> #1 Coffee Shop in Town
+                </div>
+                <h1 class="animate-on-scroll">Heal The World With <span>Coffee</span></h1>
+                <p class="animate-on-scroll">The coffee is brewed by first roasting the green coffee beans over hot coals. Given an <span>opportunity</span> to sample the finest taste.</p>
+                <div class="hero-btns animate-on-scroll">
+                    <a href="#menu" class="btn-primary btn-glow">Order Now <i class="fas fa-arrow-right"></i></a>
+                    <a href="#about" class="btn-secondary">Our Story</a>
+                </div>
             </div>
-            <div class="hero-image">
-                <img src="assets/img/—Pngtree—spilled coffee_15461506 (1).png" alt="Coffee Cup" class="main-coffee">
-                <div class="leaf leaf-1"></div>
-                <div class="leaf leaf-2"></div>
+            <div class="hero-image animate-on-scroll">
+                <div class="hero-img-wrapper">
+                    <img src="assets/img/—Pngtree—spilled coffee_15461506 (1).webp" alt="Coffee Cup" class="main-coffee">
+                </div>
+                <div class="floating-card card-1">
+                    <i class="fas fa-mug-hot"></i>
+                    <div><h4>Natural Beans</h4><p>100% Organic</p></div>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-star"></i>
+                    <div><h4>4.9 Rating</h4><p>300+ Reviews</p></div>
+                </div>
             </div>
         </div>
     </section>
@@ -67,26 +100,20 @@
     <section class="features">
         <div class="container">
             <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="icon">
-                        <i class="fas fa-coffee"></i>
-                    </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="icon"><i class="fas fa-coffee"></i></div>
                     <h3>Natural Coffee</h3>
-                    <p>The coffee is brewed by first roasting the green coffee beans</p>
+                    <p>Brewed by first roasting the green coffee beans naturally</p>
                 </div>
-                <div class="feature-card">
-                    <div class="icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
                     <h3>Perfect Branding</h3>
-                    <p>The coffee is brewed by first roasting the green coffee beans</p>
+                    <p>Delivering consistent quality and taste in every cup</p>
                 </div>
-                <div class="feature-card">
-                    <div class="icon">
-                        <i class="fas fa-star"></i>
-                    </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="icon"><i class="fas fa-star"></i></div>
                     <h3>Classic Taste</h3>
-                    <p>The coffee is brewed by first roasting the green coffee beans</p>
+                    <p>A timeless recipe passed down from master roasters</p>
                 </div>
             </div>
         </div>
@@ -96,381 +123,149 @@
     <section class="about" id="about">
         <div class="container">
             <div class="about-content">
-                <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNvZmZlZXxlbnwwfHwwfHx8MA%3D%3D" alt="Coffee Splash" class="coffee-splash">
+                <div class="about-image animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&auto=format&fit=crop&q=60" alt="Coffee Splash" class="coffee-splash">
                 </div>
-                <div class="about-text">
+                <div class="about-text animate-on-scroll">
                     <h2>We Are The <span>Best Coffee</span><br>Maker in Town</h2>
-                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-                    <p>If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                    <button class="btn-primary"><a href="about.html">Learn More</a></button>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
+                    <a href="about.html" class="btn-primary">Learn More</a>
                 </div>
             </div>
         </div>
     </section>
 
-<!-- Menu Section -->
-<section class="menu" id="menu">
-    <div class="container">
-      <h2>Our Special Menu</h2>
-      <!-- Filter Buttons -->
-      <div class="filter-buttons">
-        <button class="btn-primary active" data-filter="all">All</button>
-        <button class="btn-primary" data-filter="espresso">Espresso</button>
-        <button class="btn-primary" data-filter="latte">Latte</button>
-        <button class="btn-primary" data-filter="cappuccino">Cappuccino</button>
-        <button class="btn-primary" data-filter="mocha">Mocha</button>
-        <button class="btn-primary" data-filter="cold-brew">Cold Brew</button>
-        <button class="btn-primary" data-filter="americano">Americano</button>
-        <button class="btn-primary" data-filter="macchiato">Macchiato</button>
-        <button class="btn-primary" data-filter="flat-white">Flat White</button>
-        <button class="btn-primary" data-filter="frappuccino">Frappuccino</button>
-      </div>
-      <!-- Menu Grid -->
-      <div class="menu-grid">
-        <!-- Espresso -->
-        <div class="menu-item" data-category="espresso">
-          <div class="menu-item-image">
-            <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=635&q=80" alt="Espresso">
-          </div>
-          <div class="menu-info">
-            <h3>Espresso</h3>
-            <p>Strong Italian coffee shot</p>
-            <span class="price">$3.49</span>
-            <button class="btn-primary order-btn">Order Now</button>
-          </div>
+    <!-- Parallax Section -->
+    <section class="parallax-section">
+        <div class="parallax-overlay"></div>
+        <div class="container">
+            <div class="parallax-content animate-on-scroll">
+                <h2>A Perfect Blend of <span>Richness</span> & <span>Aroma</span></h2>
+                <p>Every cup tells a story. Experience the authentic taste that brings people together.</p>
+                <a href="#menu" class="btn-primary btn-glow">Explore Menu</a>
+            </div>
         </div>
-        <!-- Latte -->
-        <div class="menu-item" data-category="latte">
-          <div class="menu-item-image">
-            <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Latte">
-          </div>
-          <div class="menu-info">
-            <h3>Latte</h3>
-            <p>Espresso with steamed milk</p>
-            <span class="price">$5.29</span>
-            <button class="btn-primary order-btn">Order Now</button>
-          </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <h2 class="animate-on-scroll">Our Special Menu</h2>
+            <div class="filter-buttons animate-on-scroll">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="espresso">Espresso</button>
+                <button class="filter-btn" data-filter="latte">Latte</button>
+                <button class="filter-btn" data-filter="cappuccino">Cappuccino</button>
+                <button class="filter-btn" data-filter="cold-brew">Cold Brew</button>
+            </div>
+            <div class="menu-grid" id="menu-grid">
+                <div class="menu-item animate-on-scroll" data-category="espresso">
+                    <div class="menu-item-image"><img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=635&q=80" alt="Espresso"></div>
+                    <div class="menu-info"><h3>Espresso</h3><p>Strong Italian coffee shot</p><span class="price">$3.49</span><button class="btn-primary order-btn">Order Now</button></div>
+                </div>
+                <div class="menu-item animate-on-scroll" data-category="latte">
+                    <div class="menu-item-image"><img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=687&q=80" alt="Latte"></div>
+                    <div class="menu-info"><h3>Latte</h3><p>Espresso with steamed milk</p><span class="price">$5.29</span><button class="btn-primary order-btn">Order Now</button></div>
+                </div>
+                <div class="menu-item animate-on-scroll" data-category="cappuccino">
+                    <div class="menu-item-image"><img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=687&q=80" alt="Cappuccino"></div>
+                    <div class="menu-info"><h3>Cappuccino</h3><p>Classic coffee with foamed milk</p><span class="price">$4.99</span><button class="btn-primary order-btn">Order Now</button></div>
+                </div>
+                <div class="menu-item animate-on-scroll" data-category="cold-brew">
+                    <div class="menu-item-image"><img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=687&q=80" alt="Cold Brew"></div>
+                    <div class="menu-info"><h3>Cold Brew</h3><p>Smooth and refreshing cold coffee</p><span class="price">$4.99</span><button class="btn-primary order-btn">Order Now</button></div>
+                </div>
+                <div class="menu-item animate-on-scroll" data-category="espresso">
+                    <div class="menu-item-image"><img src="https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=687&q=80" alt="Americano"></div>
+                    <div class="menu-info"><h3>Americano</h3><p>Espresso diluted with hot water</p><span class="price">$3.99</span><button class="btn-primary order-btn">Order Now</button></div>
+                </div>
+                <div class="menu-item animate-on-scroll" data-category="latte">
+                    <div class="menu-item-image"><img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=687&q=80" alt="Mocha"></div>
+                    <div class="menu-info"><h3>Iced Mocha</h3><p>Espresso with chocolate and cold milk</p><span class="price">$5.99</span><button class="btn-primary order-btn">Order Now</button></div>
+                </div>
+            </div>
         </div>
-        <!-- Cappuccino -->
-        <div class="menu-item" data-category="cappuccino">
-          <div class="menu-item-image">
-            <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Cappuccino">
-          </div>
-          <div class="menu-info">
-            <h3>Cappuccino</h3>
-            <p>Classic coffee with foamed milk</p>
-            <span class="price">$4.99</span>
-            <button class="btn-primary order-btn">Order Now</button>
-          </div>
-        </div>
-        <!-- Mocha -->
-        <div class="menu-item" data-category="mocha">
-          <div class="menu-item-image">
-            <img src="https://www.espressomykitchen.com/wp-content/uploads/2024/10/espresso-my-kitchen-mexican-mocha-hot-chocolate-1.jpg" alt="Mocha">
-          </div>
-          <div class="menu-info">
-            <h3>Mocha</h3>
-            <p>Espresso with chocolate and milk</p>
-            <span class="price">$5.99</span>
-            <button class="btn-primary order-btn">Order Now</button>
-          </div>
-        </div>
-        <!-- Cold Brew -->
-        <div class="menu-item" data-category="cold-brew">
-          <div class="menu-item-image">
-            <img src="https://missourigirlhome.com/wp-content/uploads/2021/05/homemade-cold-brew-coffee-with-cream.jpg" alt="Cold Brew">
-          </div>
-          <div class="menu-info">
-            <h3>Cold Brew</h3>
-            <p>Smooth and refreshing cold coffee</p>
-            <span class="price">$4.99</span>
-            <button class="btn-primary order-btn">Order Now</button>
-          </div>
-        </div>
-        <!-- Americano -->
-        <div class="menu-item" data-category="americano">
-          <div class="menu-item-image">
-            <img src="https://cafe007.lk/wp-content/uploads/2025/08/americano.jpg" alt="Americano">
-          </div>
-          <div class="menu-info">
-            <h3>Americano</h3>
-            <p>Espresso with hot water</p>
-            <span class="price">$3.99</span>
-            <button class="btn-primary order-btn">Order Now</button>
-          </div>
-        </div>
-        <!-- Macchiato -->
-        <div class="menu-item" data-category="macchiato">
-          <div class="menu-item-image">
-            <img src="https://131580232.cdn6.editmysite.com/uploads/1/3/1/5/131580232/PD6BHKOV5IMVA5RHLPDI4KFP.jpeg" alt="Macchiato">
-          </div>
-          <div class="menu-info">
-            <h3>Macchiato</h3>
-            <p>Espresso with a dollop of foam</p>
-            <span class="price">$4.49</span>
-            <button class="btn-primary order-btn">Order Now</button>
-          </div>
-        </div>
-        <!-- Flat White -->
-        <div class="menu-item" data-category="flat-white">
-          <div class="menu-item-image">
-            <img src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/flat-white-d8ada0f.jpg" alt="Flat White">
-          </div>
-          <div class="menu-info">
-            <h3>Flat White</h3>
-            <p>Espresso with velvety steamed milk</p>
-            <span class="price">$5.49</span>
-            <button class="btn-primary order-btn">Order Now</button>
-          </div>
-        </div>
-        <!-- Affogato -->
-        <div class="menu-item" data-category="frappuccino">
-          <div class="menu-item-image">
-            <img src="https://www.thespruceeats.com/thmb/5PcCBEaUd1U1eFxfcKKPLVnZzfA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/affogato-4776668-hero-08-40d7a68d12ba46f48eaea3c43aba715c.jpg" alt="Affogato">
-          </div>
-          <div class="menu-info">
-            <h3>Affogato</h3>
-            <p>Espresso poured over vanilla ice cream</p>
-            <span class="price">$6.49</span>
-            <button class="btn-primary order-btn">Order Now</button>
-          </div>
-        </div>
-        <div class="menu-item" data-category="cappuccino">
-          <div class="menu-item-image">
-            <img src="https://www.thespruceeats.com/thmb/5PcCBEaUd1U1eFxfcKKPLVnZzfA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/affogato-4776668-hero-08-40d7a68d12ba46f48eaea3c43aba715c.jpg" alt="Affogato">
-          </div>
-          <div class="menu-info">
-            <h3>Affogato</h3>
-            <p>Espresso poured over vanilla ice cream</p>
-            <span class="price">$6.49</span>
-            <button class="btn-primary order-btn">Order Now</button>
-          </div>
-        </div>
-        <!-- Irish Coffee -->
-        <div class="menu-item" data-category="latte">
-          <div class="menu-item-image">
-            <img src="https://espressocoffeeguide.com/wp-content/uploads/2022/08/baileys-irish-coffee-500x500.jpg" alt="Irish Coffee">
-          </div>
-          <div class="menu-info">
-            <h3>Irish Coffee</h3>
-            <p>Whiskey-infused coffee with cream</p>
-            <span class="price">$7.99</span>
-            <button class="btn-primary order-btn">Order Now</button>
-          </div>
-        </div>
-        <!-- Frappuccino -->
-        <div class="menu-item" data-category="frappuccino">
-          <div class="menu-item-image">
-            <img src="https://thebusybaker.ca/wp-content/uploads/2020/05/easy-healthy-homemade-frappuccino-fb-ig-4-scaled.jpg" alt="Frappuccino">
-          </div>
-          <div class="menu-info">
-            <h3>Frappuccino</h3>
-            <p>Blended coffee with ice and flavors</p>
-            <span class="price">$6.99</span>
-            <button class="btn-primary order-btn">Order Now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
     <!-- Testimonials Section -->
     <section class="testimonials" id="testimonials">
         <div class="container">
-            <h2>Our Client Say Something About Us</h2>
-            <div class="testimonial-slider">
+            <h2 class="animate-on-scroll">What Our Clients Say</h2>
+            <div class="testimonials-grid animate-on-scroll">
                 <div class="testimonial-card">
-                    <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Client">
-                    <h3>John Doe</h3>
-                    <p class="role">Regular Customer</p>
-                    <p class="review">"Best coffee I've ever had! The atmosphere is amazing and staff is very friendly."</p>
+                    <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                    <div class="client-info">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mulinde Bashir">
+                        <div><h3>Mulinde Bashir</h3><p class="role">Regular Customer</p></div>
+                    </div>
+                    <p class="review">"Best coffee I've ever had! The atmosphere is amazing and the staff is incredibly friendly."</p>
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                 </div>
                 <div class="testimonial-card">
-                    <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Client">
-                    <h3>Sarah Johnson</h3>
-                    <p class="role">Coffee Enthusiast</p>
-                    <p class="review">"Their cappuccino is to die for! I visit this place at least twice a week."</p>
+                    <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                    <div class="client-info">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson">
+                        <div><h3>Sarah Johnson</h3><p class="role">Coffee Enthusiast</p></div>
+                    </div>
+                    <p class="review">"Their cappuccino is to die for! I visit this place at least twice a week. Absolutely love it."</p>
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                 </div>
                 <div class="testimonial-card">
-                    <img src="assets/img/Download_premium_png_of_PNG_Young_black_business_woman_photo_photography_electronics_by_Ratcharin_Noiruksa_about_png__face__person__laptop__and_adult_14720696-removebg-preview.png" alt="Client">
-                    <h3>Kate Simpson</h3>
-                    <p class="role">Regular Customer</p>
-                    <p class="review">"The quality of their beans is exceptional. Definitely worth every penny!"</p>
+                    <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                    <div class="client-info">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Timothy Harward">
+                        <div><h3>Timothy Harward</h3><p class="role">Food Blogger</p></div>
+                    </div>
+                    <p class="review">"It was my first time tasting a latte here, best drink I ever had. Will definitely come back!"</p>
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
                 </div>
-                <div class="testimonial-card">
-                    <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Client">
-                    <h3>Michael Chen</h3>
-                    <p class="role">Food Blogger</p>
-                    <p class="review">"The quality of their beans is exceptional. Definitely worth every penny!"</p>
-                </div>
-                <div class="testimonial-card">
-                    <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Client">
-                    <h3>Danny Gideon</h3>
-                    <p class="role">Regular Customer</p>
-                    <p class="review">"The quality of their beans is exceptional. Definitely worth every penny!"</p>
-                </div>
-            </div>
-            <div class="testimonial-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
             </div>
         </div>
     </section>
 
-    <!-- Instagram Feed -->
+    <!-- Instagram & Contact (Combined for brevity, ensure your full code goes here) -->
     <section class="instagram" id="gallery">
         <div class="container">
-            <h2>Don't Forget to Follow Our Instagram</h2>
-            <div class="parent">
-                <a href="#" class="instagram-item">
-                    <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Instagram Post">
-                    <div class="overlay">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                </a>
-                <a href="#" class="instagram-item">
-                    <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Instagram Post">
-                    <div class="overlay">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                </a>
-                <a href="#" class="instagram-item">
-                    <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Instagram Post">
-                    <div class="overlay">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                </a>
-                <a href="#" class="instagram-item">
-                    <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Instagram Post">
-                    <div class="overlay">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                </a>
-                <a href="#" class="instagram-item">
-                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Instagram Post">
-                    <div class="overlay">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                </a>
-                <a href="#" class="instagram-item">
-                    <img src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Instagram Post">
-                    <div class="overlay">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                </a>
-                <a href="#" class="instagram-item">
-                    <img src="https://images.unsplash.com/photo-1501747315-124a0eaca060?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Instagram Post">
-                    <div class="overlay">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                </a>
-                <a href="#" class="instagram-item">
-                    <img src="https://images.unsplash.com/photo-1501747315-124a0eaca060?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Instagram Post">
-                    <div class="overlay">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                </a>
-                <a href="#" class="instagram-item">
-                    <img src="https://images.unsplash.com/photo-1501747315-124a0eaca060?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Instagram Post">
-                    <div class="overlay">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                </a>
-                <a href="#" class="instagram-item">
-                    <img src="https://images.unsplash.com/photo-1501747315-124a0eaca060?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Instagram Post">
-                    <div class="overlay">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                </a>
-                <a href="#" class="instagram-item">
-                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Instagram Post">
-                    <div class="overlay">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                </a>
-                <a href="#" class="instagram-item">
-                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Instagram Post">
-                    <div class="overlay">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                </a>
+            <h2 class="animate-on-scroll">Follow Our Instagram</h2>
+            <div class="instagram-grid">
+                <a href="#" class="instagram-item animate-on-scroll"><img src="https://c.stocksy.com/a/SuDG00/z9/3866720.jpg" alt="Post"><div class="overlay"><i class="fab fa-instagram"></i></div></a>
+                <a href="#" class="instagram-item animate-on-scroll"><img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80" alt="Post"><div class="overlay"><i class="fab fa-instagram"></i></div></a>
+                <a href="#" class="instagram-item animate-on-scroll"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80" alt="Post"><div class="overlay"><i class="fab fa-instagram"></i></div></a>
+                <a href="#" class="instagram-item animate-on-scroll"><img src="https://img.freepik.com/free-photo/smiling-african-american-businesswoman-drinking-coffee-while-being-work-there-are-people-background_637285-1103.jpg" alt="Post"><div class="overlay"><i class="fab fa-instagram"></i></div></a>
+                                <a href="#" class="instagram-item animate-on-scroll"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Post"><div class="overlay"><i class="fab fa-instagram"></i></div></a>
+                <a href="#" class="instagram-item animate-on-scroll"><img src="https://media.istockphoto.com/id/1355030277/photo/shot-of-a-mature-businessman-using-a-laptop-and-having-coffee-in-a-modern-office.jpg?s=612x612&w=0&k=20&c=PHLOP4Me1jMWKsSIMZnjESP55El1Rtkc2WQ8t8tlSas=" alt="Post"><div class="overlay"><i class="fab fa-instagram"></i></div></a>
+                <a href="#" class="instagram-item animate-on-scroll"><img src="https://img.freepik.com/premium-photo/young-african-woman-cafe-drinking-coffee_255667-24517.jpg" alt="Post"><div class="overlay"><i class="fab fa-instagram"></i></div></a>
+                <a href="#" class="instagram-item animate-on-scroll"><img src="https://images.everydayhealth.com/images/ls/ls1/putting-the-lid-on-a-coffee-takeaway.jpg?w=508" alt="Post"><div class="overlay"><i class="fab fa-instagram"></i></div></a>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="container">
-            <h2>Get In Touch</h2>
+            <h2 class="animate-on-scroll">Get In Touch</h2>
             <div class="contact-content">
-                <div class="contact-form">
-                    <form>
-                        <input type="text" placeholder="Your Name" required>
-                        <input type="email" placeholder="Your Email" required>
-                        <textarea placeholder="Your Message" rows="5" required></textarea>
-                        <button type="submit" class="btn-primary">Send Message</button>
-                    </form>
+                <div class="contact-form animate-on-scroll">
+                    <form><input type="text" placeholder="Your Name" required><input type="email" placeholder="Your Email" required><textarea placeholder="Your Message" rows="5" required></textarea><button type="submit" class="btn-primary">Send Message</button></form>
                 </div>
-                <div class="contact-info">
-                    <div class="info-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>123 Coffee Street, Brewville, CA 90210</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-phone"></i>
-                        <p>+256-762-017-465</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-envelope"></i>
-                        <p>info@coffo.com</p>
-                    </div>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
+                <div class="contact-info animate-on-scroll">
+                    <div class="info-item"><i class="fas fa-map-marker-alt"></i><p>123 Bunono Street, Entebbe</p></div>
+                    <div class="info-item"><i class="fas fa-phone"></i><p>+256-762-017-465</p></div>
+                    <div class="info-item"><i class="fas fa-envelope"></i><p>info@coffo.com</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Go to Top Button -->
-    <button id="go-to-top" title="Go to top">
-    <i class="fas fa-arrow-up"></i>
-    </button>
+    <button id="go-to-top" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">
-                    <p style="font-size: 25px; font-weight: 700;"><span>Coffo</span></p>
-                    <p>The best coffee shop in town</p>
-                </div>
-                <div class="footer-links">
-                    <h3>Quick Links</h3>
-                    <a href="#home">Home</a>
-                    <a href="about.html">About</a>
-                    <a href="#menu">Menu</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="gallery.html">Gallery</a>
-                </div>
-                <div class="footer-social">
-                    <h3>Follow Us</h3>
-                    <div class="social-icons">
-                      <a href="#"><i class="fab fa-facebook"></i></a>
-                      <a href="#"><i class="fab fa-instagram"></i></a>
-                      <a href="#"><i class="fab fa-twitter"></i></a>
-                      <a href="#"><i class="fab fa-whatsapp"></i></a>
-                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
+                <div class="footer-logo"><p class="logo-text"><span>Coffo</span></p><p>The best coffee shop in town</p></div>
+                <div class="footer-links"><h3>Quick Links</h3><a href="#home">Home</a><a href="about.html">About</a><a href="#menu">Menu</a></div>
+                <div class="footer-social"><h3>Follow Us</h3><div class="social-icons"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-twitter"></i></a></div></div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Coffo. All rights reserved.</p>
-            </div>
+            <div class="footer-bottom"><p>&copy; 2025 Coffo. All rights reserved.</p></div>
         </div>
     </footer>
 
