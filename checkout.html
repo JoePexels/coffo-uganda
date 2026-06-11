@@ -1,251 +1,663 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Coffee Shop</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/checkout.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout – Coffo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #ff8b00;
+      --primary-hover: #ff9f2a;
+      --text-color: #ffffff;
+      --bg-color: #1a1a1a;
+      --card-bg: #252525;
+      --transition: all 0.3s ease;
+      --heading-font: 'Playfair Display', serif;
+      --body-font: 'Poppins', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--body-font);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    a { text-decoration: none; color: inherit; }
+
+    .bg-wrapper {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+    }
+    .bg-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(26, 26, 26, 0.9); z-index: 1;
+    }
+    .bg-image {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1561&q=80");
+      background-size: cover; background-position: center;
+      opacity: 0.2; z-index: 0;
+    }
+
+    /* Progress Bar */
+    .checkout-progress {
+      display: flex; justify-content: center; align-items: center; margin-bottom: 50px;
+    }
+    .progress-step {
+      display: flex; flex-direction: column; align-items: center; position: relative;
+    }
+    .step-number {
+      width: 40px; height: 40px; border-radius: 50%;
+      background-color: var(--card-bg); color: var(--text-color);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: bold; margin-bottom: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.1); transition: var(--transition);
+    }
+    .progress-step.active .step-number,
+    .progress-step.completed .step-number {
+      background-color: var(--primary-color); border-color: var(--primary-color);
+    }
+    .step-label {
+      font-size: 0.9rem; opacity: 0.7; transition: var(--transition);
+    }
+    .progress-step.active .step-label,
+    .progress-step.completed .step-label {
+      opacity: 1; color: var(--primary-color);
+    }
+    .progress-line {
+      width: 100px; height: 2px; background-color: rgba(255, 255, 255, 0.1);
+      margin: 0 15px; position: relative; top: -15px;
+    }
+    .progress-line.active {
+      background-color: var(--primary-color);
+    }
+
+    /* Main Sections */
+    .checkout-section { padding: 150px 0 100px; min-height: 80vh; }
+    .section-title {
+      text-align: center; margin-bottom: 30px; font-size: 2.5rem;
+      position: relative; display: inline-block; left: 50%; transform: translateX(-50%);
+      color: var(--text-color);
+    }
+    .section-title::after {
+      content: ""; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+      width: 80px; height: 3px; background-color: var(--primary-color); border-radius: 3px;
+    }
+
+    .checkout-container {
+      display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; margin-top: 40px;
+    }
+    .checkout-form {
+      background-color: var(--card-bg); border-radius: 15px; padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .form-section {
+      margin-bottom: 30px; padding-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .form-section:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .form-section h2 { margin-bottom: 20px; font-size: 1.5rem; }
+    .form-group { margin-bottom: 20px; }
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
+    label { display: block; margin-bottom: 8px; font-size: 0.95rem; }
+    input, select, textarea {
+      width: 100%; padding: 12px 15px; border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background-color: rgba(0, 0, 0, 0.2); color: var(--text-color);
+      font-size: 1rem; transition: var(--transition);
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary-color); outline: none;
+      box-shadow: 0 0 0 2px rgba(255, 139, 0, 0.2);
+    }
+    .payment-methods { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+    .payment-method { flex: 1; min-width: 120px; }
+    .payment-method input[type="radio"] { display: none; }
+    .payment-method label {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 15px; background-color: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
+      cursor: pointer; transition: var(--transition); text-align: center;
+    }
+    .payment-method label i { font-size: 1.5rem; margin-bottom: 8px; }
+    .payment-method input[type="radio"]:checked + label {
+      background-color: rgba(255, 139, 0, 0.1); border-color: var(--primary-color);
+    }
+    .payment-method input[type="radio"]:checked + label i { color: var(--primary-color); }
+
+    .delivery-options { display: flex; flex-direction: column; gap: 15px; }
+    .delivery-option input[type="radio"] { display: none; }
+    .delivery-option label {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px; background-color: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
+      cursor: pointer; transition: var(--transition);
+    }
+    .option-details { display: flex; flex-direction: column; }
+    .option-name { font-weight: bold; margin-bottom: 5px; }
+    .option-time { font-size: 0.85rem; opacity: 0.7; }
+    .option-price { font-weight: bold; color: var(--primary-color); }
+    .delivery-option input[type="radio"]:checked + label {
+      background-color: rgba(255, 139, 0, 0.1); border-color: var(--primary-color);
+    }
+
+    .form-actions {
+      display: flex; justify-content: space-between; align-items: center; margin-top: 30px;
+    }
+    .back-to-cart { display: flex; align-items: center; transition: var(--transition); }
+    .back-to-cart i { margin-right: 8px; }
+    .back-to-cart:hover { color: var(--primary-color); }
+    .place-order-btn {
+      padding: 15px 30px; background-color: var(--primary-color);
+      color: var(--text-color); border: none; border-radius: 30px;
+      font-size: 1.1rem; font-weight: 600; cursor: pointer;
+      transition: var(--transition); box-shadow: 0 4px 15px rgba(255, 139, 0, 0.3);
+    }
+    .place-order-btn:hover {
+      background-color: #ff9f2a; transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 139, 0, 0.4);
+    }
+    .place-order-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Order Summary */
+    .order-summary {
+      background-color: var(--card-bg); border-radius: 15px; padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.05); height: fit-content;
+      position: sticky; top: 100px;
+    }
+    .order-summary h2 { margin-bottom: 25px; text-align: center; font-size: 1.5rem; }
+    .summary-items { margin-bottom: 25px; max-height: 300px; overflow-y: auto; padding-right: 10px; }
+    .summary-item-product {
+      display: flex; align-items: center; padding: 15px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .product-image {
+      width: 60px; height: 60px; border-radius: 8px; overflow: hidden; margin-right: 15px;
+    }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; }
+    .product-details h3 { font-size: 1.1rem; margin-bottom: 5px; color: var(--primary-color); }
+    .product-details p { font-size: 0.9rem; opacity: 0.7; margin-bottom: 5px; }
+    .product-price { font-weight: bold; }
+    .summary-totals { padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; }
+    .summary-row.total {
+      margin-top: 15px; padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 1.2rem; font-weight: bold; color: var(--primary-color);
+    }
+
+    /* Confirmation Step */
+    .confirmation-step {
+      display: none; text-align: center; padding: 60px 20px;
+    }
+    .confirmation-step.active { display: block; }
+    .confirmation-icon {
+      font-size: 5rem; color: #4CAF50; margin-bottom: 20px;
+      animation: popIn 0.6s ease;
+    }
+    .confirmation-step h2 {
+      font-size: 2.5rem; margin-bottom: 15px;
+      font-family: var(--heading-font);
+    }
+    .order-number {
+      font-size: 1.1rem; opacity: 0.8; margin-bottom: 30px;
+    }
+    .purchased-items {
+      max-width: 600px; margin: 0 auto 40px; text-align: left;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px; padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .purchased-items h3 { font-size: 1.3rem; margin-bottom: 15px; }
+    .purchased-item {
+      display: flex; align-items: center; padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .purchased-item:last-child { border-bottom: none; }
+    .purchased-item img {
+      width: 50px; height: 50px; border-radius: 8px; object-fit: cover; margin-right: 15px;
+    }
+    .purchased-item .item-info { flex: 1; }
+    .purchased-item .item-name { font-weight: 600; }
+    .purchased-item .item-qty { font-size: 0.85rem; opacity: 0.7; }
+    .purchased-item .item-total { font-weight: bold; color: var(--primary-color); }
+    .total-paid {
+      font-size: 1.3rem; margin: 20px 0;
+      padding: 15px; background: rgba(255, 139, 0, 0.1);
+      border-radius: 10px;
+    }
+    .continue-shopping {
+      margin-top: 30px;
+      display: inline-block; padding: 14px 40px;
+      background-color: var(--primary-color); color: #000;
+      border-radius: 30px; font-weight: bold;
+      transition: var(--transition);
+    }
+    .continue-shopping:hover {
+      background-color: var(--primary-hover); transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #0a0a0a; padding: 80px 0 20px; margin-top: 80px;
+    }
+    .footer-content {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 50px; margin-bottom: 50px;
+    }
+    .footer-logo .brand { font-family: var(--heading-font); font-size: 1.8rem; font-weight: 700; color: var(--primary-color); }
+    .footer-logo p { margin-top: 10px; opacity: 0.8; }
+    .footer-links { display: flex; flex-direction: column; gap: 15px; }
+    .footer-links h3, .footer-social h3 { color: var(--primary-color); margin-bottom: 20px; }
+    .footer-links a:hover { padding-left: 0.5rem; color: var(--primary-color); }
+    .social-icons { display: flex; gap: 15px; flex-wrap: wrap; }
+    .social-icons a {
+      width: 42px; height: 42px; background: var(--card-bg); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; transition: var(--transition);
+    }
+    .social-icons a:hover { background: var(--primary-color); color: #000; transform: translateY(-5px); }
+    .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      70% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 992px) {
+      .checkout-container { grid-template-columns: 1fr; }
+      .order-summary { position: static; margin-top: 30px; }
+      .progress-line { width: 60px; }
+    }
+    @media (max-width: 768px) {
+      .checkout-section { padding: 120px 0 80px; }
+      .section-title { font-size: 2rem; }
+      .form-actions { flex-direction: column; gap: 20px; }
+      .place-order-btn { width: 100%; }
+      .progress-line { width: 40px; }
+    }
+    @media (max-width: 480px) {
+      .checkout-form, .order-summary { padding: 20px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
- 
-    <!-- Checkout Section -->
-    <section class="checkout-section">
-        <div class="container">
-            <h1>Checkout</h1>
-            
-            <div class="checkout-progress">
-                <div class="progress-step active">
-                    <div class="step-number">1</div>
-                    <div class="step-label">Shopping Cart</div>
-                </div>
-                <div class="progress-line active"></div>
-                <div class="progress-step active">
-                    <div class="step-number">2</div>
-                    <div class="step-label">Checkout</div>
-                </div>
-                <div class="progress-line"></div>
-                <div class="progress-step">
-                    <div class="step-number">3</div>
-                    <div class="step-label">Confirmation</div>
-                </div>
-            </div>
-            
-            <div class="checkout-container">
-                <div class="checkout-form">
-                    <div class="form-section">
-                        <h2>Contact Information</h2>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" placeholder="your@email.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" placeholder="(123) 456-7890" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-section">
-                        <h2>Shipping Information</h2>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="firstName">First Name</label>
-                                <input type="text" id="firstName" placeholder="John" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="lastName">Last Name</label>
-                                <input type="text" id="lastName" placeholder="Doe" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Street Address</label>
-                            <input type="text" id="address" placeholder="123 Coffee Street" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="apt">Apartment, Suite, etc. (optional)</label>
-                            <input type="text" id="apt" placeholder="Apt #42">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="city">City</label>
-                                <input type="text" id="city" placeholder="Brewville" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="state">State</label>
-                                <select id="state" required>
-                                    <option value="" disabled selected>Select State</option>
-                                    <option value="EN" style="background-color: var(--primary-color); color: var(--text-color);">Entebbe</option>
-                                    <option value="KM" style="background-color: var(--primary-color); color: var(--text-color);">Kampala</option>
-                                    <option value="KT" style="background-color: var(--primary-color); color: var(--text-color);">Katabi</option>
-                                    <option value="KJ" style="background-color: var(--primary-color); color: var(--text-color);">Kajjansi</option>
-                                    <!-- Add more states as needed -->
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="zip">ZIP Code</label>
-                                <input type="text" id="zip" placeholder="90210" required>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-section">
-                        <h2>Payment Method</h2>
-                        <div class="payment-methods">
-                            <div class="payment-method">
-                                <input type="radio" id="creditCard" name="paymentMethod" checked>
-                                <label for="creditCard">
-                                    <i class="far fa-credit-card"></i>
-                                    Credit Card
-                                </label>
-                            </div>
-                            <div class="payment-method">
-                                <input type="radio" id="paypal" name="paymentMethod">
-                                <label for="paypal">
-                                    <i class="fab fa-paypal"></i>
-                                    PayPal
-                                </label>
-                            </div>
-                            <div class="payment-method">
-                                <input type="radio" id="applePay" name="paymentMethod">
-                                <label for="applePay">
-                                    <i class="fab fa-apple-pay"></i>
-                                    Apple Pay
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <div id="creditCardForm" class="payment-details">
-                            <div class="form-group">
-                                <label for="cardName">Name on Card</label>
-                                <input type="text" id="cardName" placeholder="John Doe" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="cardNumber">Card Number</label>
-                                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="expDate">Expiration Date</label>
-                                    <input type="text" id="expDate" placeholder="MM/YY" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="cvv">CVV</label>
-                                    <input type="text" id="cvv" placeholder="123" required>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-section">
-                        <h2>Delivery Options</h2>
-                        <div class="delivery-options">
-                            <div class="delivery-option">
-                                <input type="radio" id="standard" name="deliveryOption" checked>
-                                <label for="standard">
-                                    <div class="option-details">
-                                        <span class="option-name">Standard Delivery</span>
-                                        <span class="option-time">3-5 Business Days</span>
-                                    </div>
-                                    <span class="option-price">Free</span>
-                                </label>
-                            </div>
-                            <div class="delivery-option">
-                                <input type="radio" id="express" name="deliveryOption">
-                                <label for="express">
-                                    <div class="option-details">
-                                        <span class="option-name">Express Delivery</span>
-                                        <span class="option-time">1-2 Business Days</span>
-                                    </div>
-                                    <span class="option-price">$5.99</span>
-                                </label>
-                            </div>
-                            <div class="delivery-option">
-                                <input type="radio" id="sameDay" name="deliveryOption">
-                                <label for="sameDay">
-                                    <div class="option-details">
-                                        <span class="option-name">Same Day Delivery</span>
-                                        <span class="option-time">Today (Order before 2PM)</span>
-                                    </div>
-                                    <span class="option-price">$9.99</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <a href="carts.html" class="back-to-cart">
-                            <i class="fas fa-arrow-left"></i> Back to Cart
-                        </a>
-                        <button type="submit" class="place-order-btn">Place Order</button>
-                    </div>
-                </div>
-                
-                <div class="order-summary">
-                    <h2>Order Summary</h2>
-                    <div class="summary-items">
-                        <!-- Cart items will be dynamically inserted here -->
-                    </div>
-                    <div class="summary-totals">
-                        <div class="summary-row">
-                            <span>Subtotal</span>
-                            <span id="subtotal">$0.00</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>Shipping</span>
-                            <span id="shipping-cost">$0.00</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>Tax</span>
-                            <span id="tax">$0.00</span>
-                        </div>
-                        <div class="summary-row total">
-                            <span>Total</span>
-                            <span id="total-cost">$0.00</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-   <!-- Background Elements -->
-   <div class="bg-wrapper">
+
+  <!-- Background -->
+  <div class="bg-wrapper">
     <div class="bg-overlay"></div>
     <div class="bg-image"></div>
-</div>
+  </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-          <div class="footer-content">
-              <div class="footer-logo">
-                <span class="span">Coffo</span>
-                  <p>The best coffee shop in town</p>
-              </div>
-              <div class="footer-links">
-                  <h3>Quick Links</h3>
-                  <a href="index.html">Home</a>
-                  <a href="about.html">About</a>
-                  <a href="index.html#menu">Menu</a>
-                  <a href="contact.html">Contact</a>
-              </div>
-              <div class="footer-social">
-                  <h3>Follow Us</h3>
-                  <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                  </div>
-              </div>
-          </div>
-          <div class="footer-bottom">
-              <p>&copy; 2025 Coffo. All rights reserved.</p>
-          </div>
+  <!-- Checkout Section -->
+  <section class="checkout-section">
+    <div class="container">
+      <h1 class="section-title">Checkout</h1>
+
+      <!-- Progress Bar -->
+      <div class="checkout-progress" id="progressBar">
+        <div class="progress-step completed" id="step1">
+          <div class="step-number">1</div>
+          <div class="step-label">Shopping Cart</div>
+        </div>
+        <div class="progress-line active" id="line1"></div>
+        <div class="progress-step active" id="step2">
+          <div class="step-number">2</div>
+          <div class="step-label">Checkout</div>
+        </div>
+        <div class="progress-line" id="line2"></div>
+        <div class="progress-step" id="step3">
+          <div class="step-number">3</div>
+          <div class="step-label">Confirmation</div>
+        </div>
       </div>
+
+      <!-- Checkout Form + Summary (Step 2) -->
+      <div id="checkoutStep" class="checkout-container">
+        <div class="checkout-form">
+          <div class="form-section">
+            <h2>Contact Information</h2>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="(123) 456-7890" required>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>Shipping Information</h2>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" placeholder="John" required>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" placeholder="Doe" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="address">Street Address</label>
+              <input type="text" id="address" placeholder="123 Coffee Street" required>
+            </div>
+            <div class="form-group">
+              <label for="apt">Apartment, Suite, etc. (optional)</label>
+              <input type="text" id="apt" placeholder="Apt #42">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" placeholder="Coffee City" required>
+              </div>
+              <div class="form-group">
+                <label for="state">State</label>
+                <select id="state" required>
+                  <option value="" disabled selected>Select State</option>
+                  <option value="EN">Entebbe</option>
+                  <option value="KM">Kampala</option>
+                  <option value="KT">Katabi</option>
+                  <option value="KJ">Kajjansi</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="zip">ZIP Code</label>
+                <input type="text" id="zip" placeholder="90210" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>Payment Method</h2>
+            <div class="payment-methods">
+              <div class="payment-method">
+                <input type="radio" id="creditCard" name="paymentMethod" checked>
+                <label for="creditCard"><i class="far fa-credit-card"></i> Credit Card</label>
+              </div>
+              <div class="payment-method">
+                <input type="radio" id="paypal" name="paymentMethod">
+                <label for="paypal"><i class="fab fa-paypal"></i> PayPal</label>
+              </div>
+              <div class="payment-method">
+                <input type="radio" id="applePay" name="paymentMethod">
+                <label for="applePay"><i class="fab fa-apple-pay"></i> Apple Pay</label>
+              </div>
+            </div>
+            <div id="creditCardForm" class="payment-details">
+              <div class="form-group">
+                <label for="cardName">Name on Card</label>
+                <input type="text" id="cardName" placeholder="John Doe" required>
+              </div>
+              <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="expDate">Expiration Date</label>
+                  <input type="text" id="expDate" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                  <label for="cvv">CVV</label>
+                  <input type="text" id="cvv" placeholder="123" required>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>Delivery Options</h2>
+            <div class="delivery-options">
+              <div class="delivery-option">
+                <input type="radio" id="standard" name="deliveryOption" checked>
+                <label for="standard">
+                  <div class="option-details"><span class="option-name">Standard</span><span class="option-time">3-5 Days</span></div>
+                  <span class="option-price">Free</span>
+                </label>
+              </div>
+              <div class="delivery-option">
+                <input type="radio" id="express" name="deliveryOption">
+                <label for="express">
+                  <div class="option-details"><span class="option-name">Express</span><span class="option-time">1-2 Days</span></div>
+                  <span class="option-price">$5.99</span>
+                </label>
+              </div>
+              <div class="delivery-option">
+                <input type="radio" id="sameDay" name="deliveryOption">
+                <label for="sameDay">
+                  <div class="option-details"><span class="option-name">Same Day</span><span class="option-time">Today (before 2PM)</span></div>
+                  <span class="option-price">$9.99</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <a href="carts.html" class="back-to-cart"><i class="fas fa-arrow-left"></i> Back to Cart</a>
+            <button type="button" class="place-order-btn" id="placeOrderBtn">Place Order</button>
+          </div>
+        </div>
+
+        <div class="order-summary" id="orderSummary">
+          <h2>Order Summary</h2>
+          <div class="summary-items" id="summaryItems"></div>
+          <div class="summary-totals">
+            <div class="summary-row"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+            <div class="summary-row"><span>Shipping</span><span id="shipping-cost">$0.00</span></div>
+            <div class="summary-row"><span>Tax</span><span id="tax">$0.00</span></div>
+            <div class="summary-row total"><span>Total</span><span id="total-cost">$0.00</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirmation Step (Step 3) - Hidden initially -->
+      <div id="confirmationStep" class="confirmation-step">
+        <div class="confirmation-icon"><i class="fas fa-check-circle"></i></div>
+        <h2>Order Confirmed!</h2>
+        <p class="order-number">Your order <strong>#<span id="orderID">COFFO-12345</span></strong> has been placed successfully.</p>
+        <div class="purchased-items" id="purchasedItemsList"></div>
+        <div class="total-paid">Total Paid: <span id="confirmationTotal">$0.00</span></div>
+        <a href="index.html" class="continue-shopping">Continue Shopping</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <span class="brand">Coffo</span>
+          <p>The best coffee shop in town</p>
+        </div>
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="index.html#menu">Menu</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-social">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Coffo. All rights reserved.</p>
+      </div>
+    </div>
   </footer>
 
-<script src="assets/js/checkout.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // ---------- LOAD CART FROM LOCAL STORAGE ----------
+      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      const summaryItemsContainer = document.getElementById("summaryItems");
+      const purchasedItemsContainer = document.getElementById("purchasedItemsList");
+      let subtotal = 0;
+      let currentShipping = 0;
+
+      // Function to render cart items into a container (used both in summary and confirmation)
+      function renderCartItems(container, showQty = true) {
+        container.innerHTML = "";
+        subtotal = 0;
+        cartItems.forEach(item => {
+          const price = parseFloat(item.price.replace("$", ""));
+          const totalPrice = price * item.quantity;
+          subtotal += totalPrice;
+
+          const div = document.createElement("div");
+          div.className = showQty ? "summary-item-product" : "purchased-item";
+          div.innerHTML = showQty ? `
+            <div class="product-image"><img src="${item.image}" alt="${item.name}"></div>
+            <div class="product-details">
+              <h3>${item.name}</h3>
+              <p>Quantity: ${item.quantity}</p>
+              <span class="product-price">$${totalPrice.toFixed(2)}</span>
+            </div>
+          ` : `
+            <img src="${item.image}" alt="${item.name}">
+            <div class="item-info">
+              <div class="item-name">${item.name}</div>
+              <div class="item-qty">Qty: ${item.quantity}</div>
+            </div>
+            <div class="item-total">$${totalPrice.toFixed(2)}</div>
+          `;
+          container.appendChild(div);
+        });
+      }
+
+      // Update summary totals
+      function updateTotals() {
+        const tax = subtotal * 0.1;
+        const total = subtotal + currentShipping + tax;
+        document.getElementById("subtotal").textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById("shipping-cost").textContent = `$${currentShipping.toFixed(2)}`;
+        document.getElementById("tax").textContent = `$${tax.toFixed(2)}`;
+        document.getElementById("total-cost").textContent = `$${total.toFixed(2)}`;
+        // Also update confirmation total placeholder
+        document.getElementById("confirmationTotal").textContent = `$${total.toFixed(2)}`;
+        return total;
+      }
+
+      // Initial render
+      renderCartItems(summaryItemsContainer, true);
+      updateTotals();
+
+      // Delivery option change
+      document.querySelectorAll('input[name="deliveryOption"]').forEach(radio => {
+        radio.addEventListener("change", function() {
+          if (this.id === "express") currentShipping = 5.99;
+          else if (this.id === "sameDay") currentShipping = 9.99;
+          else currentShipping = 0;
+          updateTotals();
+        });
+      });
+
+      // Payment method toggle
+      const paymentMethods = document.querySelectorAll('input[name="paymentMethod"]');
+      const creditCardForm = document.getElementById("creditCardForm");
+      paymentMethods.forEach(method => {
+        method.addEventListener("change", function() {
+          creditCardForm.style.display = this.id === "creditCard" ? "block" : "none";
+        });
+      });
+
+      // Formatting helpers
+      document.getElementById("cardNumber")?.addEventListener("input", function(e) {
+        let val = this.value.replace(/\D/g, "").slice(0,16);
+        this.value = val.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
+      });
+      document.getElementById("expDate")?.addEventListener("input", function(e) {
+        let val = this.value.replace(/\D/g, "").slice(0,4);
+        if (val.length > 2) this.value = val.slice(0,2) + "/" + val.slice(2);
+        else this.value = val;
+      });
+      document.getElementById("cvv")?.addEventListener("input", function(e) {
+        this.value = this.value.replace(/\D/g, "").slice(0,4);
+      });
+
+      // ---------- PLACE ORDER -> SHOW CONFIRMATION ----------
+      const placeOrderBtn = document.getElementById("placeOrderBtn");
+      const checkoutStepDiv = document.getElementById("checkoutStep");
+      const confirmationStepDiv = document.getElementById("confirmationStep");
+      const progressStep2 = document.getElementById("step2");
+      const progressStep3 = document.getElementById("step3");
+      const progressLine2 = document.getElementById("line2");
+
+      placeOrderBtn.addEventListener("click", function() {
+        // Validate required fields
+        const requiredFields = document.querySelectorAll("#checkoutStep [required]");
+        let isValid = true;
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            isValid = false;
+            field.style.border = "2px solid #ff6b6b";
+            field.style.boxShadow = "0 0 0 2px rgba(255,107,107,0.2)";
+          } else {
+            field.style.border = "1px solid rgba(255,255,255,0.1)";
+            field.style.boxShadow = "none";
+          }
+        });
+
+        if (!isValid) {
+          const firstInvalid = document.querySelector("#checkoutStep [required]:invalid") || 
+                               document.querySelector("#checkoutStep [required]");
+          if (firstInvalid) firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
+
+        // Simulate processing
+        placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        placeOrderBtn.disabled = true;
+
+        setTimeout(() => {
+          // Hide checkout form/summary
+          checkoutStepDiv.style.display = "none";
+          // Show confirmation
+          confirmationStepDiv.classList.add("active");
+
+          // Update progress bar
+          progressStep2.classList.remove("active");
+          progressStep2.classList.add("completed");
+          progressLine2.classList.add("active");
+          progressStep3.classList.add("active");
+
+          // Generate order ID
+          const orderID = "COFFO-" + Math.floor(10000 + Math.random() * 90000);
+          document.getElementById("orderID").textContent = orderID;
+
+          // Render purchased items in confirmation
+          renderCartItems(purchasedItemsContainer, false);
+
+          // Show final total
+          const finalTotal = updateTotals(); // already updated earlier, just to be safe
+          document.getElementById("confirmationTotal").textContent = `$${finalTotal.toFixed(2)}`;
+
+          // Clear cart from localStorage (order placed)
+          localStorage.removeItem("cartItems");
+
+          // Scroll to top of page
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 1500);
+      });
+    });
+  </script>
 </body>
 </html>
-
