@@ -248,6 +248,20 @@
       transition: color 0.3s, padding-left 0.3s;
     }
     .sidebar-link:hover { color: var(--primary-color); padding-left: 10px; }
+            /* Mobile cart count badge in sidebar */
+        #mobile-cart-count {
+            background: var(--primary-color);
+            color: #000;
+            border-radius: 50%;
+            padding: 2px 7px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-left: auto;
+            min-width: 22px;
+            text-align: center;
+            display: inline-block;
+            border: 2px solid #111;
+        }
     .sidebar-footer {
       padding: 20px;
       border-top: 1px solid rgba(255,255,255,0.1);
@@ -662,30 +676,36 @@
     </div>
   </nav>
 
-  <!-- Mobile Sidebar Menu (exactly as original, now functional) -->
-  <div class="mobile-overlay" id="mobile-overlay"></div>
-  <div class="mobile-sidebar" id="mobile-sidebar">
-    <div class="sidebar-header">
-      <div class="logo"><a href="index.html">Coffo</a></div>
-      <button class="sidebar-close" id="sidebar-close"><i class="fas fa-times"></i></button>
+    <!-- Mobile Sidebar Menu -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="mobile-sidebar" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><a href="index.html">Coffo</a></div>
+            <button class="sidebar-close" id="sidebar-close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sidebar-nav">
+            <a href="#home" class="sidebar-link">Home</a>
+            <a href="about.html" class="sidebar-link">About Us</a>
+            <a href="#menu" class="sidebar-link">Our Menu</a>
+            <a href="gallery.html" class="sidebar-link">Gallery</a>
+            <a href="contact.html" class="sidebar-link">Contact</a>
+            <!-- 🛒 Cart link added for mobile devices -->
+            <a href="carts.html" class="sidebar-link" style="border-bottom: 2px solid rgba(255,139,0,0.4);">
+                <i class="fas fa-shopping-cart" style="color: var(--primary-color);"></i> My Cart
+                <span id="mobile-cart-count">0</span>
+            </a>
+        </div>
+        <div class="sidebar-footer">
+            <a href="#menu" class="btn-primary sidebar-order-btn">Order Now</a>
+            <div class="sidebar-socials">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p>© 2025 Coffo. All rights reserved.</p>
+        </div>
     </div>
-    <div class="sidebar-nav">
-      <a href="index.html" class="sidebar-link">Home</a>
-      <a href="about.html" class="sidebar-link">About Us</a>
-      <a href="index.html#menu" class="sidebar-link">Our Menu</a>
-      <a href="gallery.html" class="sidebar-link">Gallery</a>
-      <a href="contact.html" class="sidebar-link">Contact</a>
-    </div>
-    <div class="sidebar-footer">
-      <a href="#menu" class="btn-primary sidebar-order-btn">Order Now</a>
-      <div class="sidebar-socials">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-      </div>
-      <p>© 2025 Coffo. All rights reserved.</p>
-    </div>
-  </div>
+
 
   <!-- ========== MODERN ABOUT CONTENT ========== -->
   <!-- Parallax Hero -->
